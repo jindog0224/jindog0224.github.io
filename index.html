@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <title></title>
+  <style>
+    body,
+    html {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 상단 네비게이션 */
+    .navbar {
+      background-color: #e6ebd7;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 30px;
+      position: sticky;
+      /* 무조건 sticky로! */
+      top: 0;
+      z-index: 100;
+    }
+
+    .dropdown {
+      display: none;
+      position: fixed;
+      /* 화면 기준 고정 */
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      width: 160px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 200;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .dropdown a:hover {
+      background-color: #f0f0f0;
+    }
+
+    .logo {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #ffecc3;
+      padding: 5px 10px;
+      border: 1px solid #333;
+    }
+
+    .nav-links a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+
+    .login_link {
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .login_link a {
+      text-decoration: none;
+      color: black;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* 검색 영역 */
+    .search-section {
+      text-align: center;
+      padding: 5px 0;
+    }
+
+    .search-form-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+    }
+
+    .search-input {
+      padding: 15px;
+      width: 220px;
+      border-radius: 15px;
+      border: 1px solid #aaa;
+    }
+
+    .option-button {
+      padding: 15px 12px;
+      border-radius: 10px;
+      border: 1px solid #aaa;
+      background-color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .search-icon-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .search-icon-button img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .custom-dropdown {
+      display: none;
+      /* 처음엔 안 보이게 */
+      position: absolute;
+      top: 50px;
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 300;
+      width: 380px;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+
+    .custom-dropdown.active {
+      display: flex;
+    }
+
+    .dropdown-left,
+    .dropdown-right {
+      width: 48%;
+    }
+
+    /* 스타일 select 박스 */
+    #categorySelect {
+      width: 100%;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid #aaa;
+      background-color: #fff;
+      font-size: 14px;
+    }
+
+    /* 인원 체크박스 */
+    .dropdown-right label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .dropdown-right input[type="checkbox"] {
+      margin-right: 6px;
+    }
+
+    /* 본문 영역 */
+    .gray-section {
+      height: 200px;
+      background-image: linear-gradient(to bottom, rgb(255, 242, 229), white);
+      padding: 40px;
+      text-align: center;
+      color: #8f4805;
+      margin: 0;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.001);
+    }
+
+    .gray-section img {
+      width: 300px;
+      height: 200px;
+    }
+
+    .white-section {
+      height: auto;
+      background-color: white;
+      padding: 40px;
+      text-align: center;
+      color: #333;
+      margin: 0;
+    }
+
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .cafe-card {
+      background: #fff6ea;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s;
+      width: 260px;
+    }
+
+    .cafe-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .cafe-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .cafe-content {
+      padding: 16px;
+    }
+
+    .cafe-name {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .cafe-desc {
+      font-size: 14px;
+      color: #555;
+    }
+
+    footer {
+      background-color: rgb(255, 255, 255);
+      padding: 20px 0;
+    }
+
+    footer p {
+      border-top: 1.5px solid rgb(192, 192, 192);
+      border-bottom: 1.5px solid rgb(192, 192, 192);
+      padding: 20px 0;
+      margin: 0;
+      color: rgb(86, 86, 86);
+    }
+
+    #warningOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      /* 흐림 효과 */
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #warningBox {
+      background-color: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .warning-backdrop {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .warning-modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .warning-modal p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .warning-modal button {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #333;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 네비게이션 -->
+  <header class="navbar">
+    <div class="logo">Do Find Coffee !</div>
+
+    <!-- 드롭다운 메뉴 -->
+    <div class="dropdown" id="dropdown">
+      <a href="category.html?type=pet">반려동물 동반</a>
+      <a href="category2.html?type=ocean">오션뷰</a>
+      <a href="category3.html?type=study">카공하기 좋은</a>
+      <a href="category4.html?type=takeout">테이크아웃 전문</a>
+      <a href="category5.html?type=sensibility">감성</a>
+      <a href="category6.html?type=brunch">브런치</a>
+    </div>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="#" id="categoryMenu" onclick="toggleDropdown(event, this)">Category</a>
+      <a href="Bookmark.html">Bookmark</a>
+    </nav>
+    <div class="login_link"><a href="login.html">
+        <font size=3>Login</font>
+      </a></div>
+  </header>
+
+  <!--수정햇음 gray 어쩌구 안에 검색 섹션을 넣어버렷음!!!-->
+
+  <div class="gray-section">
+    <img src="image/베이지컵최최종.png" alt="A beige coffee cup with the words DO FIND COFFEE written in bold brown letters on the cup. The design is playful and cheerful, set against a plain background." />
+  </div>
+
+  <!-- 검색 섹션 -->
+  <section class="search-section">
+    <div class="search-form-wrapper">
+      <input type="text" class="search-input" id="searchBox" placeholder="카페 스타일과 인원을 선택하세요!" readonly />
+
+      <button type="button" id="dropdownToggle" class="option-button">옵션 선택 ▼</button>
+
+      <button type="button" id="searchSubmit" class="search-icon-button">
+        <img src="search.png" alt="Search" />
+      </button>
+
+      <!-- 드롭다운 -->
+      <div class="custom-dropdown" id="customDropdown">
+        <div class="dropdown-left">
+          <label for="categorySelect">스타일</label>
+          <select id="categorySelect">
+            <option value="">선택</option>
+            <option value="pet">반려동물 동반</option>
+            <option value="ocean">오션뷰</option>
+            <option value="study">카공</option>
+            <option value="takeout">테이크아웃</option>
+            <option value="sensibility">감성</option>
+            <option value="brunch">브런치</option>
+          </select>
+        </div>
+        <div class="dropdown-right">
+          <label>인원 수</label><br />
+          <label><input type="checkbox" name="people" value="1-2"> 1-2인</label>
+          <label><input type="checkbox" name="people" value="3-4"> 3-4인</label>
+          <label><input type="checkbox" name="people" value="5+"> 5인 이상</label>
+        </div>
+      </div>
+    </div>
+
+
+  </section>
+  <!-- 본문 -->
+
+  <div class="white-section">
+    <h2>Find Today's Cafe !</h2>
+    <div class="card-grid">
+      <div class="cafe-card" onclick="goToDetail('cafe01')">
+        <img src="image/오브레멘.jpeg" alt="카페1" />
+        <div class="cafe-content">
+          <div class="cafe-name">오브레멘</div>
+          <div class="cafe-desc">오션뷰 감성 가득한 공간</div>
+        </div>
+      </div>
+      <div class="cafe-card" onclick="goToDetail('cafe02')">
+        <img src="image/그레그.jpeg" alt="카페2" />
+        <div class="cafe-content">
+          <div class="cafe-name">그레그 커피</div>
+          <div class="cafe-desc">식물과 어우러진 카공하기 좋은 공간</div>
+        </div>
+      </div>
+      <div class="cafe-card" onclick="goToDetail('cafe03')">
+        <img src="image/그린어스.jpeg" alt="카페3" />
+        <div class="cafe-content">
+          <div class="cafe-name">그린어스</div>
+          <div class="cafe-desc">반려동물과 함께 여유로운 한 잔</div>
+        </div>
+      </div>
+      <div class="cafe-card" onclick="goToDetail('cafe04')">
+        <img src="image/대잠맨션.jpeg" alt="카페4" />
+        <div class="cafe-content">
+          <div class="cafe-name">대잠맨션</div>
+          <div class="cafe-desc">도심 속 감성 카페</div>
+        </div>
+      </div>
+    </div>
+    <br> <br> <br> <br> <br> <br>
+    <h2>Find Today's Event !</h2>
+    <div class="card-grid">
+      <div class="cafe-card" onclick="goToDetail('cafe05')">
+        <img src="image/로드샵.jpeg" alt="카페1" />
+        <div class="cafe-content">
+          <div class="cafe-name">로드샵</div>
+          <div class="cafe-desc">상시 이벤트<br>네이버 리뷰 작성 시 도넛 증정</div>
+        </div>
+      </div>
+      <div class="cafe-card" onclick="goToDetail('cafe06')">
+        <img src="image/스벅.jpeg" alt="카페2" />
+        <div class="cafe-content">
+          <div class="cafe-name">스타벅스</div>
+          <div class="cafe-desc">매일 pm5:00~마감까지<br>디카페인 음료 주문 시 디저트 할인</div>
+        </div>
+      </div>
+      <div class="cafe-card" onclick="goToDetail('cafe07')">
+        <img src="image/서정빌라.jpeg" alt="카페3" />
+        <div class="cafe-content">
+          <div class="cafe-name">서정빌라</div>
+          <div class="cafe-desc">7월 1일 ~ 10일<br>음료 전 메뉴 30% 할인</div>
+        </div>
+      </div>
+      <div class="cafe-card" onclick="goToDetail('cafe08')">
+        <img src="image/그린어스.jpeg" alt="카페4" />
+        <div class="cafe-content">
+          <div class="cafe-name">그린어스</div>
+          <div class="cafe-desc">7월 3일 오늘 하루 !!<br>케이크 주문 시 아메리카노 2500원 </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 경고 오버레이 -->
+  <div id="warningOverlay">
+    <div id="warningBox">
+      <p>스타일을 먼저 선택해주세요!</p>
+      <button id="warningConfirm">확인</button>
+    </div>
+  </div>
+
+
+  <!-- 푸터 -->
+  <footer>
+    <p>@findcafe &nbsp; 제작자: 박지연, 강신영, 원찬미, 강주은, 고은서 &nbsp;</p>
+  </footer>
+
+  <!-- 스크립트 -->
+  <script>
+     document.addEventListener('DOMContentLoaded', function () {
+    const loginLink = document.querySelector('.login_link');
+
+    // 로그인 상태 확인
+    if (sessionStorage.getItem('isLoggedIn') === 'true') {
+      loginLink.innerHTML = '<a href="#" id="logoutBtn"><font size=3>Logout</font></a>';
+    }
+
+    // 로그아웃 처리
+    loginLink.addEventListener('click', function (e) {
+      if (e.target && e.target.id === 'logoutBtn') {
+        e.preventDefault();
+        sessionStorage.removeItem('isLoggedIn');
+        window.location.reload(); // 로그아웃 후 페이지 새로고침
+      }
+    });
+  });
+  document.addEventListener('DOMContentLoaded', function () {
+  const loginLink = document.querySelector('.login_link a');
+
+  // 로그인 상태 확인
+  const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+  if (isLoggedIn) {
+    loginLink.textContent = 'Logout';
+    loginLink.addEventListener('click', function (e) {
+      e.preventDefault(); // 링크 이동 막고
+      if (confirm('로그아웃 하시겠습니까?')) {
+        sessionStorage.removeItem('isLoggedIn');
+        alert('로그아웃 되었습니다.');
+        window.location.href = 'index.html'; // 또는 login.html
+      }
+    });
+  }
+});
+    document.addEventListener('DOMContentLoaded', function () {
+      const dropdownToggle = document.getElementById('dropdownToggle');
+      const dropdownBox = document.getElementById('customDropdown');
+      const styleSelect = document.getElementById('categorySelect');
+      const peopleCheckboxes = document.querySelectorAll('input[name="people"]');
+      const searchBox = document.getElementById('searchBox');
+      const searchButton = document.getElementById('searchSubmit');
+      const overlay = document.getElementById('warningOverlay');
+      const confirmBtn = document.getElementById('warningConfirm');
+
+      // 옵션 토글 버튼 클릭 시 드롭다운 표시/숨기기
+      dropdownToggle.addEventListener('click', () => {
+        if (dropdownBox.style.display === 'flex') {
+          dropdownBox.style.display = 'none';
+        } else {
+          dropdownBox.style.display = 'flex';  // flex 유지해서 레이아웃 안 깨지도록
+        }
+      });
+
+      // 검색창 내용 실시간 업데이트
+      function updateSearchBox() {
+        const style = styleSelect.options[styleSelect.selectedIndex].text;
+        const people = Array.from(peopleCheckboxes)
+          .filter(cb => cb.checked)
+          .map(cb => cb.nextSibling.textContent.trim())
+          .join(', ');
+        searchBox.value = `${style}${people ? ' / ' + people : ''}`;
+      }
+
+      styleSelect.addEventListener('change', updateSearchBox);
+      peopleCheckboxes.forEach(cb => cb.addEventListener('change', updateSearchBox));
+
+      // 검색 버튼 클릭 시 이동 또는 경고
+      searchButton.addEventListener('click', function () {
+        const styleValue = styleSelect.value;
+        const peopleValue = Array.from(peopleCheckboxes)
+          .filter(cb => cb.checked)
+          .map(cb => cb.value)
+          .join(',');
+
+        if (!styleValue) {
+          overlay.style.display = 'flex'; // 경고창 표시
+          return;
+        }
+
+        const categoryPages = {
+          pet: 'category.html',
+          ocean: 'category2.html',
+          study: 'category3.html',
+          takeout: 'category4.html',
+          sensibility: 'category5.html',
+          brunch: 'category6.html'
+        };
+
+        const page = categoryPages[styleValue] || 'category.html'; // fallback 설정
+        const url = `${page}?type=${styleValue}${peopleValue ? `&people=${peopleValue}` : ''}`;
+        window.location.href = url;
+      }); // ✅ 이 닫는 중괄호가 빠져 있었음!!
+
+      // ✅ 경고창 확인 버튼 클릭 시 닫기 (이건 별도로!)
+      confirmBtn.addEventListener('click', function () {
+        overlay.style.display = 'none';
+      });
+
+      // 드롭다운 외부 클릭 시 닫기 (상태 유지)
+      document.addEventListener('click', function (e) {
+        if (!dropdownBox.contains(e.target) && !dropdownToggle.contains(e.target)) {
+          dropdownBox.style.display = 'none';
+        }
+      });
+
+      // 카테고리 상단 메뉴 드롭다운
+      function toggleDropdown(event, element) {
+        event.preventDefault();
+        const dropdown = document.getElementById("dropdown");
+        const rect = element.getBoundingClientRect();
+        dropdown.style.left = rect.left + "px";
+        dropdown.style.top = (rect.bottom) + "px";
+        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+      }
+      window.toggleDropdown = toggleDropdown;
+
+      window.onclick = function (event) {
+        const dropdown = document.getElementById("dropdown");
+        if (!event.target.matches('#categoryMenu') && !event.target.matches('#searchBox')) {
+          dropdown.style.display = "none";
+        }
+      };
+
+      document.getElementById('dropdown').addEventListener('mouseleave', function () {
+        this.style.display = 'none';
+      });
+
+      // 카드 클릭 시 상세 페이지 이동
+      window.goToDetail = function (cafeId) {
+        window.location.href = `infopageEvent.html?cafe=${cafeId}`;
+      };
+    });
+    dropdownToggle.addEventListener('click', () => {
+      dropdownBox.classList.toggle('active');
+    });
+
+    // 외부 클릭 시 드롭다운 닫기
+    document.addEventListener('click', (e) => {
+      if (!dropdownBox.contains(e.target) && !dropdownToggle.contains(e.target)) {
+        dropdownBox.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+
+</html>

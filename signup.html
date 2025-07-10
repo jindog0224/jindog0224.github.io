@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>회원가입</title>
+   <style>
+     * {padding: 0; margin: 0;}
+
+     html, body {
+       font-family: 'Arial', sans-serif;
+       height: 100%;
+       background: #e4e4e4;
+     }
+
+     #container {
+       display: flex;
+       flex-direction: row;
+       justify-content: center;
+       align-items: center;
+       height: 100%;
+     }
+
+     #signupBox {
+       width: 500px;
+       text-align: center;
+       border: 2px solid #7baced;
+       background-color: #ffffff;
+     }
+
+     #signupBoxTitle {
+       background-color: #7baced;
+       color: #ffffff;
+       padding: 5px;
+     }
+
+     #inputBox {
+       margin: 20px;
+     }
+
+     #signupBox input {
+       width: 200px;
+       height: 24px;
+       margin: 0 0 6px 0;
+       padding: 3px 5px;
+     }
+
+     #inputBox span {
+       display: inline-block;
+       margin-right: 10px;
+       text-align: right;
+       width: 100px;
+       white-space: nowrap;  /* 줄바꿈 방지 */
+     }
+
+     #inputBox button {
+       padding: 3px 5px;
+     }
+
+     /* 로그인 페이지 링크 */
+     #loginLink {
+       margin-top: 10px;
+       font-size: 14px;
+     }
+     #loginLink a {
+       text-decoration: none;
+       color: #7baced;
+     }
+     #loginLink a:hover {
+       text-decoration: underline;
+     }
+   </style>
+</head>
+<body>
+  <div id="container">
+    <div id="signupBox">
+      <p id="signupBoxTitle">회원가입</p>
+      <div id="inputBox">
+        <p><span>아이디 </span><input type="text" name="uid" class="form-control" /></p>
+        <p><span>비밀번호 </span><input type="password" name="upw" class="form-control" /></p>
+        <p><span>비밀번호 확인 </span><input type="password" name="upw_confirm" class="form-control" /></p>
+        <p><span>이메일 </span><input type="email" name="email" class="form-control" /></p>
+        <br>
+       <button onclick="register()">회원가입</button>
+      </div>
+      <p id="loginLink">
+        이미 계정이 있으신가요? <a href="login.html">로그인</a>
+        <br> <br>
+      </p>
+    </div>
+  </div>
+  <script>
+function register() {
+    const uid = document.querySelector('input[name="uid"]').value.trim();
+    const upw = document.querySelector('input[name="upw"]').value.trim();
+    const upw_confirm = document.querySelector('input[name="upw_confirm"]').value.trim();
+    const email = document.querySelector('input[name="email"]').value.trim();
+
+    if (!uid || !upw || !email) {
+        alert('모든 필드를 입력해주세요.');
+        return;
+    }
+
+    if (upw !== upw_confirm) {
+        alert('비밀번호가 일치하지 않습니다.');
+        return;
+    }
+
+    // LocalStorage에 계정 저장
+    localStorage.setItem('userId', uid);
+    localStorage.setItem('userPw', upw);
+
+    alert('회원가입이 완료되었습니다. 로그인 해주세요.');
+    window.location.href = 'login.html'; // 로그인 페이지로 이동
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+ <!DOCTYPE html>
+  <html lang="en">
+  <head>
+     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 로그인 </title>
+<style> 
+ *{padding: 0; margin: 0; }
+
+html, body {
+  font-family: 'Arial', sans-serif;
+  height: 100%;
+  background: #e4e4e4;
+}
+
+#container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#loginBox {
+  width: 400px;
+  text-align: center;
+  border: 2px solid #7baced;
+  background-color: #ffffff;
+}
+
+#loginBoxTitle {
+  background-color:#7baced;
+  color:#ffffff;
+  padding: 5px;
+}
+#inputBox {
+  margin: 10px;
+}
+#loginBox input {
+  width: 200px;
+  height: 24px;
+  margin: 0 0 5px 0;
+  padding: 2px 5px;
+}
+#inputBox span {
+  display: inline-block;
+  margin-right: 10px;
+  text-align: right;
+  width: 100px;
+}
+#inputBox button {
+  padding: 3px 5px;
+}
+
+
+    </style>
+  </head>
+  <body>
+    <!--  html 전체 영역을 지정하는 container -->
+    <div id="container">
+      <!--  login 폼 영역을 : loginBox -->
+      <div id="loginBox">
+        <!-- 로그인 페이지 타이틀 -->
+        <p id="loginBoxTitle">로그인</p>
+        <!-- 아이디, 비번, 버튼 박스 -->
+        <div id="inputBox">
+          <br>
+          <p><span>아이디 </span><input type="text" name="uid" class="form-control"></p>
+          <p><span>비밀번호 </span><input type="password" name="upw" class="form-control"></p>
+          <br>
+          <button onclick="login()">로그인</button>
+          <br>
+          <p style="margin-top: 10px; font-size: 14px;"> 계정이 없으신가요? </p>
+          <a href="signup.html" style="color:#7baced; font-size: 14px; text-decoration:none;">회원가입</a>
+          <br>
+        </div>  
+      </div>
+    </div>
+    <script>
+function login() {
+    const uid = document.querySelector('input[name="uid"]').value.trim();
+    const upw = document.querySelector('input[name="upw"]').value.trim();
+
+    // LocalStorage에서 계정 정보 가져오기
+    const savedId = localStorage.getItem('userId');
+    const savedPw = localStorage.getItem('userPw');
+
+   if (uid === savedId && upw === savedPw) {
+    alert('로그인 성공!');
+    sessionStorage.setItem('isLoggedIn', 'true');  // ✅ 로그인 상태 저장
+    window.location.href = 'index.html'; // 홈페이지로 이동
+      }
+   else {
+        alert('존재하지 않는 계정이거나 비밀번호가 틀렸습니다.');
+    }
+}
+</script>
+  </body>
+  </html>
