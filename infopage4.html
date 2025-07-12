@@ -140,11 +140,26 @@
             display: block;
         }
 
+        #cafeTitle {
+            display: inline-block;
+            border-bottom: 3px solid #a3b18a;
+            padding-bottom: 4px;
+        }
+
         #cafeInfo {
             width: 80%;
             margin: auto;
             padding: 10px 0;
             line-height: 1.6;
+        }
+
+        .cafe-info-box {
+            background-color: #f3f4f1;  /* 원하는  색상 */
+            padding: 15px;              /* 안쪽 여백 */
+            border-radius: 20px;         /* 모서리 둥글게 */
+            margin-top: -20px;           /* 위에 여백 */
+            max-width: 780px;           /* 원하는 폭으로 조정 */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -281,34 +296,140 @@
 
         const cafeTemplates = {
             cafe01: {
-                name: "커피바리즈",
+                name: "커피바 리즈",
                 images: {
                     main: "image/바리즈.jpeg",
-                    subs: ["image/바리즈.jpeg"]
+                    subs: ["image/바리즈1.jpeg","image/바리즈2.jpeg"]
                 },
                 infoHTML: `
-          <p><b>운영시간:</b> 매일 10:00 ~ 22:00</p>
-          <p><b>대표 메뉴:</b> 바닐라 라떼, 수제 케이크</p>
-          <p><b>특징:</b> 조용한 분위기, 펍 스타일 인테리어</p>
-          <p><b>위치:</b> 서울 강남구 역삼로 123</p>
-          <p><b>SNS:</b> @coffee_bariz</p>
-        `
-            },
+                <div class="cafe-info-box">
+          <p><b>⏰ 운영시간:</b> 매일 12:00 ~ 24:00</p>
+          <p><b>🍰 대표 메뉴:</b> 필터 커피, 카이막</p>
+          <p><b>💡 특징:</b> 카이막과 함께하는 달콤한 시간</p>
+          <p><b>📍 위치:</b> 포항시 북구 삼호로 180, 1F</p>
+          <p><b>📱 SNS:</b> <a href="https://www.instagram.com/coffeebar_rizz?utm_source=ig_web_button_share_sheet&igsh=NTA4anhwemR3Nmxl">@coffeebar_rizz</a></p>
+                </div>
+        `},
             cafe02: {
-                name: "With Holiday",
+                name: "Wit Holiday",
                 images: {
                     main: "image/With Holiday.jpeg",
-                    subs: ["image/With Holiday.jpeg", "image/holiday2.jpg"] //사진을 더 넣고 싶은시면 ','로 옆에 추가하시면 정렬됩니다.
+                    subs: ["image/위트1.jpeg", "image/위트2.jpeg"]
                 },
                 infoHTML: `
-          <p><b>운영시간:</b> 매일 09:00 ~ 21:00</p>
-          <p><b>대표 메뉴:</b> 플랫화이트, 당근케이크</p>
-          <p><b>특징:</b> 고즈넉한 분위기, 반려동물 동반 가능</p>
-          <p><b>위치:</b> 서울 마포구 연남동</p>
-          <p><b>SNS:</b> @with.holiday</p>
-        `
-            }
-            // 👉 추가 카페는 여기에 계속 넣으세요. 위에 것과 똑같은 형식으로 하시면 됩니다! 
+                <div class="cafe-info-box">
+          <p><b>⏰ 운영시간:</b> 매일 13:00 ~ 21:00</p>
+          <p><b>🍰 대표 메뉴:</b> 오렌지 라떼, 바나나 푸딩</p>
+          <p><b>💡 특징:</b> 아늑한 공간에서 즐기는 커피 한잔</p>
+          <p><b>📍 위치:</b> 포항시 북구 삼호로 189번길 14-7, 1F</p>
+          <p><b>📱 SNS:</b><a href="https://www.instagram.com/wit_holiday?utm_source=ig_web_button_share_sheet&igsh=MTJ6Z2V3YnZhM3NzZg=="> @wit_holiday </a></p>
+                </div>
+          `},
+            cafe03: {
+                name: "로드샵 카페",
+                images: {
+                    main: "image/로드샵.jpeg",
+                    subs: ["image/로드샵1.jpeg", "image/로드샵2.jpeg"] 
+                },
+                infoHTML: `
+                <div class="cafe-info-box">
+          <p><b>⏰ 운영시간:</b> 평일 10:30 ~ 23:00</p>
+          <p><b>🍰 대표 메뉴:</b> 호주 아이스 커피, 바나나 업사이드 케이크</p>
+          <p><b>💡 특징:</b> 맛있는 커피와 함께하는 여유로운 시간</p>
+          <p><b>📍 위치:</b> 포항시 북구 장량로 214 카페 로드샵</p>
+          <p><b>📱 SNS:</b><a href="https://www.instagram.com/caferoadshop_?utm_source=ig_web_button_share_sheet&igsh=b2N2ZnRhM2tiYmZu"> @caferoadshop_ </a></p>
+                </div>
+          `},
+            cafe04: {
+                name: "그린어스",
+                images: {
+                    main: "image/그린어스.jpeg",
+                    subs: ["image/그린어스1.jpeg","image/그린어스2.jpeg"]
+                },
+                infoHTML: `
+                <div class="cafe-info-box">
+          <p><b>⏰ 운영시간:</b> 매일 11:30 ~ 22:00 / 월 휴무</p>
+          <p><b>🍰 대표 메뉴:</b> 바질 토마토 크림치즈 푸딩, 계절 과일 셔벗</p>
+          <p><b>💡 특징:</b> 매 시즌 새롭게 만나는 푸딩의 매력</p>
+          <p><b>📍 위치:</b> 포항시 북구 중흥로113번길 12, 1F</p>
+          <p><b>📱 SNS:</b> <a href="https://www.instagram.com/green_ous_?utm_source=ig_web_button_share_sheet&igsh=MXNqOWtzOWo3cjFwNw==">@green_ous_</a></p>
+                </div>
+        `},
+            cafe05: {
+                name: "베릴키키",
+                images: {
+                    main: "image/베릴키키.jpeg",
+                    subs: ["image/베릴키키2.jpeg", "image/베릴키키1.jpeg"] 
+                },
+                infoHTML: `
+                <div class="cafe-info-box">
+          <p><b>⏰ 운영시간:</b> 매일 10:00 ~ 22:00</p>
+          <p><b>🍰 대표 메뉴:</b> 벨키파르페, 샐러드 파스타</p>
+          <p><b>💡 특징:</b> 반려동물과 즐기는 편안한 시간</p>
+          <p><b>📍 위치:</b> 포항시 북구 해안로 133, 2F</p>
+          <p><b>📱 SNS:</b><a href="https://www.instagram.com/beryl_kiki?utm_source=ig_web_button_share_sheet&igsh=dWJnNjZidG1mbjE1"> @beryl_kiki </a></p>
+                </div>
+          `},
+            cafe06: {
+                name: "휘겔리",
+                images: {
+                    main: "image/휘겔리.jpeg",
+                    subs: ["image/휘겔리1.jpeg", "image/휘겔리2.jpeg"]
+                },
+                infoHTML: `
+                <div class="cafe-info-box">
+          <p><b>⏰ 운영시간:</b> 매일 10:00 ~ 18:00</p>
+          <p><b>🍰 대표 메뉴:</b> 잠봉 베이글 샌드위치, 시그니처 라떼</p>
+          <p><b>💡 특징:</b> 조용한 분위기에서 즐기는 커피 한잔</p>
+          <p><b>📍 위치:</b> 포항시 북구 용당로139번길 12, 1F</p>
+          <p><b>📱 SNS:</b><a href="https://www.instagram.com/cafe__hyggelig?utm_source=ig_web_button_share_sheet&igsh=ODJkanlzOWtxdWFy"> @cafe__hyggelig </a></p>
+                </div>
+          `},
+            cafe07: {
+                name: "페이지38",
+                images: {
+                    main: "image/페이지38.jpeg",
+                    subs: ["image/페이지381.jpeg","image/페이지382.jpeg"]
+                },
+                infoHTML: `
+                <div class="cafe-info-box">
+          <p><b>⏰ 운영시간:</b> 매일 10:00 ~ 20:00</p>
+          <p><b>🍰 대표 메뉴:</b> 아몬드 더블샷, 크림 모카라떼</p>
+          <p><b>💡 특징:</b> 다양한 디저트와 맛있는 음료의 조화</p>
+          <p><b>📍 위치:</b> 포항시 북구 청하면 해안로2064번길 48</p>
+          <p><b>📱 SNS:</b> <a href="https://www.instagram.com/cafe_page38?utm_source=ig_web_button_share_sheet&igsh=MTJzb2I1enptcnc3dg==">@cafe_page38</a></p>
+                </div>
+        `},
+            cafe08: {
+                name: "오후애",
+                images: {
+                    main: "image/오후애.jpeg",
+                    subs: ["image/오후애1.jpeg", "image/오후애2.jpeg"]
+                },
+                infoHTML: `
+                <div class="cafe-info-box">
+          <p><b>⏰ 운영시간:</b> 매일 11:00 ~ 23:00</p>
+          <p><b>🍰 대표 메뉴:</b> 크림카페모카, 케이크</p>
+          <p><b>💡 특징:</b> 포항 대표 디저트 카페</p>
+          <p><b>📍 위치:</b> 포항시 북구 해안로 243-2 2, 3F</p>
+          <p><b>📱 SNS:</b><a href="https://www.instagram.com/ohoo.ae?utm_source=ig_web_button_share_sheet&igsh=MWs3OGNzZW8zb2V1Zw=="> @ohoo.ae </a></p>
+                </div>
+          `},
+            cafe09: {
+                name: "EMC COFFEE",
+                images: {
+                    main: "image/ EMC COFFEE.jpeg",
+                    subs: ["image/emccoffee2.jpeg", "image/emccoffee1.jpeg"]
+                },
+                infoHTML: `
+                <div class="cafe-info-box">
+          <p><b>⏰ 운영시간:</b> 매일 08:30 ~ 22:00</p>
+          <p><b>🍰 대표 메뉴:</b> EMC시그니처베이글라떼, 피자 베이글</p>
+          <p><b>💡 특징:</b> 신선함이 가득한 에이드 한 잔</p>
+          <p><b>📍 위치:</b> 포항시 북구 새천년대로 1337, 1F</p>
+          <p><b>📱 SNS:</b><a href="https://www.instagram.com/emc2coffee_official?utm_source=ig_web_button_share_sheet&igsh=MjE1MHU3NGN5dWo4"> @emc2coffee_official </a></p>
+                </div>
+          `},
         };
 
         const urlParams = new URLSearchParams(window.location.search);
